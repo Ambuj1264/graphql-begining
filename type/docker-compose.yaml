@@ -1,0 +1,20 @@
+version : "3.4"
+
+services:
+  postgressIVR:
+    image: postgres:14.1-alpine
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    container_name: postgres-auto
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydb
+    volumes:
+      - ./db/:/var/lib/postgresql/data
+    command: -p 5431
+
+volumes:
+  postgres_data: 
