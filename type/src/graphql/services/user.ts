@@ -1,4 +1,3 @@
-
 import { users } from "../../entity/user";
 import JWT from "jsonwebtoken";
 const jwt = require("jsonwebtoken");
@@ -19,6 +18,10 @@ export interface Userfind {
 export interface UserId {
   _id: string;
 }
+
+export interface filterKey {
+  search: string;
+}
 class UserServices {
   public static async createUser(payload: CreateUserPayload) {
     const { firstName, lastName, email, password } = payload;
@@ -37,7 +40,6 @@ class UserServices {
       email,
       password,
     });
-   
   }
   helloJwt = async (findMyUser: any) => {
     const createToken = await jwt.sign({ ...findMyUser }, "ambuj", {
@@ -46,8 +48,7 @@ class UserServices {
   };
 
   public static async findAllUser(payload: any) {
-    const findAllData = await users.find(payload);
-    return findAllData;
+    return users.find(payload);
   }
   public static async deleteUser(payload: UserId) {
     const { _id } = payload;
@@ -62,6 +63,35 @@ class UserServices {
 
   public static decodeJWTToken(token: string) {
     return JWT.verify(token, JWT_SECRET);
+  }
+  public static async filterUser(payload: filterKey) {
+    const { search } = payload;
+    if (!search) {
+      return false;
+    }
+    const searchObjOr: any[] = [];
+    const searchObj = {};
+    searchObjOr.push({
+      email: { $regex: ".*" + search + ".*", $options: "i" },
+    });
+    searchObjOr.push({
+      firstName: { $regex: ".*" + search + ".*", $options: "i" },
+
+    });
+    searchObjOr.push({
+            lastName: { $regex: ".*" + search + ".*", $options: "i" },
+    
+    })
+    searchObjOr.push({
+        password: { $regex: ".*" + search + ".*", $options: "i" },
+    })
+    searchObj["$or"] = searchObjOr;
+    // console.log(searchObj["$or"]);
+    console.log(searchObj);
+
+    const myData = await users.find(searchObj);
+
+    return myData;
   }
 }
 

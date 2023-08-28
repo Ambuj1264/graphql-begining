@@ -1,4 +1,5 @@
 export const queries = `#graphql
 loginUser(email: String!, password: String!): users
-getAllUser:[users]
+getAllUser:[users],
+filterUser(search:String!): [users]
 `;

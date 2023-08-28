@@ -3,10 +3,8 @@ import ProductServices, { CreateProductPayload, ProductDetails } from '../../ser
 const queries = {
     product  : async (_: any, payload:ProductDetails) => {
       return await ProductServices.findProduct(payload);
-  
-    
     },
-    getAllUser: async (_: any, payload:{}) => {
+    getAllProduct: async (_: any, payload:{}) => {
       const fullData = await ProductServices.findAllProduct(payload);
       return fullData;
     },
