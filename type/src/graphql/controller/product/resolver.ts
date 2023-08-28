@@ -5,6 +5,7 @@ const queries = {
       return await ProductServices.findProduct(payload);
     },
     getAllProduct: async (_: any, payload:{}, context : any) => {
+      console.log(context);
       if (context && context.user) {
       const fullData = await ProductServices.findAllProduct(payload);
       return fullData;

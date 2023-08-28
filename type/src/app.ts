@@ -26,9 +26,11 @@ import UserServices from "./graphql/services/user";
         context: async ({ req }) => {
           // @ts-ignore
           const token = req.headers["token"];
+       
   
           try {
-            const user = UserServices.decodeJWTToken(token as string);
+            const user =await UserServices.decodeJWTToken(token as string);
+            console.log(user);
             return { user };
           } catch (error) {
             return {};

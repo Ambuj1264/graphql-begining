@@ -36,15 +36,22 @@ class UserServices {
 
   public static async findUser(payload: Userfind) {
     const { email, password } = payload;
-    return await users.findOne({
+    const findMyUser= await users.findOne({
       email,
       password,
     });
+  
+return    await  this.helloJwt(findMyUser)
   }
-  helloJwt = async (findMyUser: any) => {
+ public static   helloJwt = async (findMyUser: any) => {
+    console.log(findMyUser,"findmyuser");
     const createToken = await jwt.sign({ ...findMyUser }, "ambuj", {
       expiresIn: "24h",
     });
+    console.log(createToken,"token");
+  return  {
+    findMyUser,token:createToken
+    }
   };
 
   public static async findAllUser(payload: any) {
@@ -58,11 +65,12 @@ class UserServices {
     return deleteUserById;
   }
   public static createJWTToken() {
-    return;
+    return ;
   }
 
-  public static decodeJWTToken(token: string) {
-    return JWT.verify(token, JWT_SECRET);
+  public static async decodeJWTToken(token: string) {
+    const verify =await jwt.verify(token, "ambuj");
+    return verify
   }
   public static async filterUser(payload: filterKey) {
     const { search } = payload;
@@ -96,3 +104,7 @@ class UserServices {
 }
 
 export default UserServices;
+function helloJwt(findUser: any) {
+  throw new Error("Function not implemented.");
+}
+

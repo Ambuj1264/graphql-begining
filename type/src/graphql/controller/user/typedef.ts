@@ -7,4 +7,8 @@ type users{
     email: String
     password: String
 }
+ type tokenWithUser {
+    token: String
+    findMyUser: users
+ }
 `;

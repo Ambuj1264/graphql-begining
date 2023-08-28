@@ -2,7 +2,10 @@ import UserServices, { CreateUserPayload, UserId, filterKey } from "../../servic
 
 const queries = {
   loginUser: async (_: any, payload: { email: string; password: string }) => {
-    return await UserServices.findUser(payload);
+
+    const mydata= await UserServices.findUser(payload);
+    console.log(mydata);
+    return mydata;
 
   
   },
