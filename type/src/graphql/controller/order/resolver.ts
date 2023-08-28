@@ -1,13 +1,14 @@
 import order from "../../../entity/order"
+import { OrderService } from "../../services/order";
 
 export interface createOrders {
     product: string,
-    order: string
+    person: string
 }
 
-const mutations ={
+export const mutations ={
     createOrder: async (_:any , payload: createOrders)=>{
-        const createmyOrder = await OrderService.CreateMyService(payload);
+      return  await OrderService.CreateMyService(payload);
         
     }
 }
